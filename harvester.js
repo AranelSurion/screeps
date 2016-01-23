@@ -1,0 +1,46 @@
+/*
+ * Module code goes here. Use 'module.exports' to export things:
+ * module.exports = 'a thing';
+ *
+ * You can import it from another modules like this:
+ * var mod = require('harvester'); // -> 'a thing'
+ */
+ 
+ module.exports = function (creep) {
+	if(creep.carry.energy < creep.carryCapacity) {
+		var sources = creep.room.find(FIND_SOURCES);
+		if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
+			creep.moveTo(sources[0]);
+		}			
+	}
+	else {
+	    if (creep.memory.passbit != 1){
+	    var transferYeri = Game.spawns.Spawn1;
+	    process = creep.transfer(transferYeri, RESOURCE_ENERGY);
+	    }else{
+	    var transferYeri = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: function (s){
+	        return s.structureType = STRUCTURE_EXTENSION && s.energy < s.energyCapacity
+	    }
+	    
+	    })
+	    console.log(transferYeri);
+	    process = creep.transfer(transferYeri, RESOURCE_ENERGY);
+	    }
+		if( process == ERR_NOT_IN_RANGE) {
+			creep.moveTo(transferYeri);
+		}
+		if( process == ERR_FULL && transferYeri == Game.spawns.Spawn1) {
+            creep.memory.passbit = 1;
+            console.log("Harvester: Spawn is full.");
+		} 
+		if( process == ERR_FULL && transferYeri != Game.spawns.Spawn1) {
+            creep.memory.passbit = 0;
+            console.log("Harvester: Extension is full.");
+		}
+		if( transferYeri == null){
+		    creep.memory.passbit = 0;
+		    console.log("Harvester: All extensions are full.");
+		}
+		
+}
+}
