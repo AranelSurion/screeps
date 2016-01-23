@@ -14,31 +14,29 @@
 		}			
 	}
 	else {
-	    if (creep.memory.passbit != 1){
+	    if (creep.memory.passbit == 1){
 	    var transferYeri = Game.spawns.Spawn1;
 	    process = creep.transfer(transferYeri, RESOURCE_ENERGY);
 	    }else{
 	    var transferYeri = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: function (s){
-	        return s.structureType = STRUCTURE_EXTENSION && s.energy < s.energyCapacity
+	        return s.structureType == STRUCTURE_EXTENSION && s.energy < s.energyCapacity
 	    }
-	    
 	    })
-	    console.log(transferYeri);
 	    process = creep.transfer(transferYeri, RESOURCE_ENERGY);
 	    }
 		if( process == ERR_NOT_IN_RANGE) {
 			creep.moveTo(transferYeri);
 		}
 		if( process == ERR_FULL && transferYeri == Game.spawns.Spawn1) {
-            creep.memory.passbit = 1;
+            creep.memory.passbit = 0;
             console.log("Harvester: Spawn is full.");
 		} 
 		if( process == ERR_FULL && transferYeri != Game.spawns.Spawn1) {
-            creep.memory.passbit = 0;
-            console.log("Harvester: Extension is full.");
+            /* creep.memory.passbit = 1; */
+            console.log("Harvester: Extension became full.");
 		}
 		if( transferYeri == null){
-		    creep.memory.passbit = 0;
+		    creep.memory.passbit = 1;
 		    console.log("Harvester: All extensions are full.");
 		}
 		
