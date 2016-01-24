@@ -15,21 +15,6 @@ module.exports.loop = function () {
     for (var name in Game.creeps){ /* main for loop */
         var creep = Game.creeps[name];
  
-         /* creep renewal */
-        if (26 < (creep.ticksToLive < 200)){
-            creep.memory.renewal = 1;
-        }
-        if (creep.memory.renewal == 1){
-            process = Game.spawns.Spawn1.renewCreep(creep);
-            if (process == ERR_NOT_IN_RANGE){
-                creep.moveTo(Game.spawns.Spawn1);
-            }
-            if (process == ERR_FULL){ /* creep renewed. */
-                creep.memory.renewal = 0;
-                console.log("renewal: this creep is full.");
-            }
-        }
-        
         /* roles */
         if (creep.memory.role == "harvester"){
            harvester(creep); 
@@ -47,6 +32,21 @@ module.exports.loop = function () {
         /*    upgrader(creep);
         } */
         
+ 
+        /* creep renewal */
+        if (26 < creep.ticksToLive && creep.ticksToLive < 200){
+            creep.memory.renewal = 1;
+        }
+        if (creep.memory.renewal == 1){
+            process = Game.spawns.Spawn1.renewCreep(creep);
+            if (process == ERR_NOT_IN_RANGE){
+                creep.moveTo(Game.spawns.Spawn1);
+            }
+            if (process == ERR_FULL){ /* creep renewed. */
+                creep.memory.renewal = 0;
+                console.log("renewal: this creep is full.");
+            }
+        }
         
         /* creep is lost. recreate. */
         if (creep.ticksToLive < 25 && creep.memory.willbereplaced != 1){ /* handle creep decay */ /* use renew instead? */
