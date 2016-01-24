@@ -16,6 +16,12 @@
 	else {
 	    if (creep.memory.passbit == 1){
 	    var transferYeri = Game.spawns.Spawn1;
+	    /* periodically check extensions - guess it's better than running find every iteration. */
+	    if (creep.memory.chkcount){
+	        creep.memory.chkcount = creep.memory.chkcount + 1;
+	    }else{
+	        creep.memory.chkcount = 0;
+	    }
 	    process = creep.transfer(transferYeri, RESOURCE_ENERGY);
 	    }else{
 	    var transferYeri = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: function (s){
@@ -38,6 +44,9 @@
 		if( transferYeri == null){
 		    creep.memory.passbit = 1;
 		    console.log("Harvester: All extensions are full.");
+		}
+		if( creep.memory.chkcount > 9){ /* periodically check for extensions */
+		    creep.memory.passbit = 0;
 		}
 		
 }
