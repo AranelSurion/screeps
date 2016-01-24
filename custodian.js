@@ -46,7 +46,6 @@ if (creep.carry.energy == 0){
     });
     
     process = creep.repair(fortify);
-    console.log("custodian: " + process);
     if (process == ERR_NOT_IN_RANGE){
         creep.moveTo(process);
     }
@@ -58,4 +57,3 @@ if (creep.carry.energy == 0){
     }
 }
 }
-    
