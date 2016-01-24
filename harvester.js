@@ -20,7 +20,7 @@
 	    if (creep.memory.chkcount){
 	        creep.memory.chkcount = creep.memory.chkcount + 1;
 	    }else{
-	        creep.memory.chkcount = 0;
+	        creep.memory.chkcount = 1;
 	    }
 	    process = creep.transfer(transferYeri, RESOURCE_ENERGY);
 	    }else{
@@ -47,6 +47,7 @@
 		}
 		if( creep.memory.chkcount > 9){ /* periodically check for extensions */
 		    creep.memory.passbit = 0;
+		    creep.memory.chkcount = 1;
 		}
 		
 }
