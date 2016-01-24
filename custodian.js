@@ -47,7 +47,7 @@ if (creep.carry.energy == 0){
     
     process = creep.repair(fortify);
     if (process == ERR_NOT_IN_RANGE){
-        creep.moveTo(process);
+        creep.moveTo(fortify);
     }
     if (process != ERR_NOT_IN_RANGE){
         creep.memory.wontrepair = 0;
