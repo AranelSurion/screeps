@@ -16,4 +16,11 @@ if (hostile){
     }
     
 }
+if (Game.flags.GUARD_MOVE){
+    creep.cancelOrder("move"); /* cancel ALL move orders */
+    creep.moveTo(Game.flags.GUARD_MOVE);
+    if (hostile){
+        creep.attack(hostile);
+    }
+}
 }

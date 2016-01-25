@@ -2,11 +2,14 @@ var harvester = require("harvester");
 var builder = require("builder");
 var guard = require("guard");
 var custodian = require("custodian");
+var miner = require("miner");
+var carrier = require("carrier");
 /*var upgrader = require("upgrader");*/
 module.exports.loop = function () {
 
     /* spawn guards on hostile presence */
         if (Game.spawns.Spawn1.room.find(FIND_HOSTILE_CREEPS).length > 0 && Game.spawns.Spawn1.energy >= 150){
+            Game.notify("Main: We are under attack!");
             if (Game.spawns.Spawn1.createCreep([ATTACK, ATTACK, TOUGH, TOUGH, MOVE, MOVE], null, {role: "guard"}) == -6){ /* not enough energy */
                 Game.spawns.Spawn1.createCreep([ATTACK, TOUGH, TOUGH, MOVE], null, {role: "guard"});
             }
@@ -28,6 +31,12 @@ module.exports.loop = function () {
         if (creep.memory.role == "custodian"){
             custodian(creep);
         }
+        if (creep.memory.role == "miner"){
+            miner(creep);
+        }
+        if (creep.memory.role == "carrier"){
+            carrier(creep);
+        }        
         /* if (creep.memory.role == "upgrader") Builders now work as Upgraders. */
         /*    upgrader(creep);
         } */
@@ -38,6 +47,7 @@ module.exports.loop = function () {
             creep.memory.renewal = 1;
         }
         if (creep.memory.renewal == 1){
+            creep.cancelOrder("move"); /* cancel ALL scheduled movement orders */
             process = Game.spawns.Spawn1.renewCreep(creep);
             if (process == ERR_NOT_IN_RANGE){
                 creep.moveTo(Game.spawns.Spawn1);
