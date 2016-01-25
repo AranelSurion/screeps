@@ -8,11 +8,11 @@
  
 module.exports = function (creep) {
 
-var hostiles = creep.room.find(FIND_HOSTILE_CREEPS);
-if (hostiles.length){
+var hostile = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+if (hostile){
     creep.say("Hostile detected.");
-    if (creep.attack(hostiles[0]) == ERR_NOT_IN_RANGE){
-        creep.moveTo(hostiles[0]);
+    if (creep.attack(hostile) == ERR_NOT_IN_RANGE){
+        creep.moveTo(hostile);
     }
     
 }

@@ -43,7 +43,7 @@
 		}
 		if( transferYeri == null){
 		    creep.memory.passbit = 1;
-		    console.log("Harvester: All extensions are full.");
+		    /* console.log("Harvester: All extensions are full."); */
 		}
 		if( creep.memory.chkcount > 9){ /* periodically check for extensions */
 		    creep.memory.passbit = 0;

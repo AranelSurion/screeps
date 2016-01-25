@@ -8,7 +8,7 @@
  
    module.exports = function (creep) {
 
-WALLHITS = 10000; /* Wall hits value, increase this to further fortify walls */
+WALLHITS = 100000; /* Wall hits value, increase this to further fortify walls */
 
 if (creep.carry.energy == 0){
     if (Game.spawns.Spawn1.energy >= 150){
@@ -29,27 +29,24 @@ if (creep.carry.energy == 0){
     }
     } /* ends - found next target */
     
-    if (creep.memory.target && creep.memory.wontrepair != 1){ /* returns even if target=0 */
+    if (creep.memory.target  && creep.memory.wontrepair != 1){
         target = Game.getObjectById(creep.memory.target);
     process = creep.repair(target);
     if (process == ERR_NOT_IN_RANGE){
         creep.moveTo(target);
-    }
-    if (process == OK){
+    }else{    /* OK or ERR_INVALID_TARGET? */
         creep.memory.target = 0;
     }    
     }else{ /* find a wall or rampart to fortify */
     var fortify = creep.pos.findClosestByRange(FIND_STRUCTURES,{ /* hardcoded hit value */
         filter: function(object){ 
-        return object.hits < WALLHITS && (object.structureType == STRUCTURE_RAMPART || object.structureType == STRUCTURE_WALL); /* repair non-walls under %90 */
+        return object.hits < WALLHITS && object.hitsMax != 1 && (object.structureType == STRUCTURE_RAMPART || object.structureType == STRUCTURE_WALL); /* repair non-walls under %90 */
         }    
     });
-    
     process = creep.repair(fortify);
     if (process == ERR_NOT_IN_RANGE){
         creep.moveTo(fortify);
-    }
-    if (process != ERR_NOT_IN_RANGE){
+    }else{
         creep.memory.wontrepair = 0;
     }
     
@@ -57,3 +54,4 @@ if (creep.carry.energy == 0){
     }
 }
 }
+    
