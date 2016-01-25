@@ -11,11 +11,11 @@ Apart from the original tutorial features, this bot also can:
 - Recreate creeps if renewal fails and they fall into decay.
 - Builders can also maintain Room Controller and work as an Upgrader. (there's also an Upgrader role, if you prefer)
 - Builders won't drain a Spawn under half of its capacity.
-- Custodian role. Maintains roads and structures under less than %90 integrity, also fortifies walls and ramparts in its spare time.
-- Guards can talk, and notify you of hostile presence.
-- Spawn guards automatically on hostile presence.
+- Custodian role. Maintains roads and structures under  %90 integrity, also fortifies walls and ramparts in its spare time. (ignores rookie walls)
+- Miner/Carrier roles to replace Harvester role. Also refills builders if upgrading Room Controller.
+- Guards can talk, and notify you of hostile presence. They can be ordered to move by using GUARD_MOVE flag.
+- Spawn guards automatically on hostile presence. You'll also receive a notification.
 - Harvesters use and prioritize Extensions, they can also switch back and forth.
-
 
 **Note**: "Spawn1" is the hardcoded spawn name.
 
