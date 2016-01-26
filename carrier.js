@@ -28,7 +28,11 @@
     
          if (miner && miner.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
              creep.moveTo(miner);
-         } /* else do nothing */
+         }else{
+             if(creep.pos.findClosestByRange(FIND_DROPPED_ENERGY)){
+             creep.pickup(creep.pos.findClosestByRange(FIND_DROPPED_ENERGY));
+             }
+         }
 	    
 	} else { /* unloading */
 	    if (creep.memory.passbit == 1){
@@ -60,12 +64,15 @@
             
             var upgrader = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
             filter: function(object) {
-            return object.memory.role == "builder" && object.memory.upgrademode == 1;
+            return object.memory.role == "builder" && object.memory.upgrademode == 1 && object.carry.energy != object.carryCapacity;
             }
             });
             
             if (upgrader){
                 /* console.log("debug: selected upgrader"); */
+                if (creep.carry.energy < 50){ /* not worth it, go back and refill */
+                    creep.memory.fillmode = 1;
+                }
                 creep.memory.passbit = 2;
                 creep.memory.upgradetarget = upgrader.id;
                 upgrader.memory.waitbit = 1;
