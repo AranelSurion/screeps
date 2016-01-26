@@ -25,11 +25,18 @@ if (creep.carry.energy == 0 && creep.memory.waitbit != 1){ /* specialized as nee
     }else{
      /* upgrader mode. obsoleting upgrader creep. */
     process = creep.upgradeController(creep.room.controller) 
-    if (process == ERR_NOT_IN_RANGE){
+    if (process == ERR_NOT_IN_RANGE && creep.carry.energy != 0){
         creep.moveTo(creep.room.controller);
     }
     if (process == OK){
          creep.memory.upgrademode = 1; /* checked by carrier role */
+    }
+    if (process == ERR_NOT_ENOUGH_RESOURCES){
+        creep.memory.upgrademode = 0; /* checked by carrier role */
+        creep.memory.waitbit = 0; /* checked by carrier role */
+        if(creep.pos.isNearTo(creep.room.controller)) {
+        creep.move(RIGHT);
+        }
     }
 
     }

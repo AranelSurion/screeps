@@ -10,12 +10,21 @@ module.exports = function (creep) {
 
 var hostile = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
 if (hostile){
-    creep.say("Hostile detected.");
+    creep.say("Hostile!");
     if (creep.attack(hostile) == ERR_NOT_IN_RANGE){
         creep.moveTo(hostile);
     }
     
 }
+
+var structure = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{ filter: function(object){return object.structureType != STRUCTURE_CONTROLLER;}});
+if (!hostile && structure){
+    console.log(structure + creep.attack(structure));
+    if (creep.attack(structure) == ERR_NOT_IN_RANGE){
+        creep.moveTo(structure);
+    }    
+}
+
 if (Game.flags.GUARD_MOVE){
     creep.cancelOrder("move"); /* cancel ALL move orders */
     creep.moveTo(Game.flags.GUARD_MOVE);

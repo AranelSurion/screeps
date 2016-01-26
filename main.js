@@ -46,7 +46,7 @@ module.exports.loop = function () {
         if (26 < creep.ticksToLive && creep.ticksToLive < 200){
             creep.memory.renewal = 1;
         }
-        if (creep.memory.renewal == 1){
+        if (creep.memory.renewal == 1 && creep.memory.willbereplaced != 1){
             creep.cancelOrder("move"); /* cancel ALL scheduled movement orders */
             process = Game.spawns.Spawn1.renewCreep(creep);
             if (process == ERR_NOT_IN_RANGE){
