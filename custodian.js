@@ -11,7 +11,7 @@
 WALLHITS = 100000; /* Wall hits value, increase this to further fortify walls */
 
 if (creep.carry.energy == 0){
-    if (Game.spawns.Spawn1.energy >= 150){
+    if (Game.spawns.Spawn1.energy >= 50){
         if (Game.spawns.Spawn1.transferEnergy(creep) == ERR_NOT_IN_RANGE){
             creep.moveTo(Game.spawns.Spawn1);
     }}

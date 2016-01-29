@@ -8,7 +8,7 @@
  
 module.exports = function (creep) {
 
-var hostile = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+var hostile = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS, {filter: function(object){ return object.owner != "Source Keeper";}});
 if (hostile){
     creep.say("Hostile!");
     if (creep.attack(hostile) == ERR_NOT_IN_RANGE){
@@ -17,7 +17,7 @@ if (hostile){
     
 }
 
-var structure = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{ filter: function(object){return object.structureType != STRUCTURE_CONTROLLER;}});
+var structure = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter: function(object){return object.structureType != STRUCTURE_CONTROLLER && object.structureType != STRUCTURE_KEEPER_LAIR;}});
 if (!hostile && structure){
     console.log(structure + creep.attack(structure));
     if (creep.attack(structure) == ERR_NOT_IN_RANGE){

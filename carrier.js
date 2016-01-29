@@ -14,11 +14,13 @@
 	    creep.memory.fillmode = 0;
 	}
 	
-	if (creep.memory.fillmode == 1){
+	if (creep.memory.fillmode == 1){ /* IF STRUCTURE_STORAGE DOES NOT EXIST */
 	    creep.memory.passbit = 0;
         upgradetarget = Game.getObjectById(creep.memory.upgradetarget); /* cleaning wait bits */
         if (upgradetarget){upgradetarget.memory.waitbit = 0
         creep.memory.upgradetarget = 0;}
+        
+        if (!creep.room.storage){
         /* finding closest miner */
         var miner = creep.pos.findClosestByRange(FIND_MY_CREEPS, {
         filter: function(object) {
@@ -31,6 +33,10 @@
          }else{
              if(creep.pos.findClosestByRange(FIND_DROPPED_ENERGY)){
              creep.pickup(creep.pos.findClosestByRange(FIND_DROPPED_ENERGY));
+             }
+         }}else{ /* STRUCTURE_STORAGE EXISTS */
+             if (creep.room.storage.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE){
+                 creep.moveTo(creep.room.storage);
              }
          }
 	    
@@ -52,7 +58,7 @@
 	    var transferYeri = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: function (s){
 	        return s.structureType == STRUCTURE_EXTENSION && s.energy < s.energyCapacity
 	    }
-	    })
+	    });
 	    process = creep.transfer(transferYeri, RESOURCE_ENERGY);
 	    }
 		if( process == ERR_NOT_IN_RANGE) {

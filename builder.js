@@ -9,7 +9,7 @@
   module.exports = function (creep) {
 
 if (creep.carry.energy == 0 && creep.memory.waitbit != 1){ /* specialized as needed by carrier role */
-    if (Game.spawns.Spawn1.energy >= 150){
+    if (Game.spawns.Spawn1.energy >= 50){
         creep.memory.upgrademode = 0;
         if (Game.spawns.Spawn1.transferEnergy(creep) == ERR_NOT_IN_RANGE){
             creep.moveTo(Game.spawns.Spawn1);

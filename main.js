@@ -8,7 +8,7 @@ var carrier = require("carrier");
 module.exports.loop = function () {
 
     /* spawn guards on hostile presence */
-        if (Game.spawns.Spawn1.room.find(FIND_HOSTILE_CREEPS).length > 0 && Game.spawns.Spawn1.energy >= 150){
+        if (Game.spawns.Spawn1.room.find(FIND_HOSTILE_CREEPS, {filter: function(object){ return object.owner != "Source Keeper";}}).length > 0 && Game.spawns.Spawn1.energy >= 150){
             Game.notify("Main: We are under attack!");
             if (Game.spawns.Spawn1.createCreep([ATTACK, ATTACK, TOUGH, TOUGH, MOVE, MOVE], null, {role: "guard"}) == -6){ /* not enough energy */
                 Game.spawns.Spawn1.createCreep([ATTACK, TOUGH, TOUGH, MOVE], null, {role: "guard"});
