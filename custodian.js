@@ -8,12 +8,13 @@
  
    module.exports = function (creep) {
 
-WALLHITS = 100000; /* Wall hits value, increase this to further fortify walls */
+WALLHITS = creep.room.memory.wallhits; /* Wall hits value, increase this to further fortify walls */
 
 if (creep.carry.energy == 0){
-    if (Game.spawns.Spawn1.energy >= 50){
-        if (Game.spawns.Spawn1.transferEnergy(creep) == ERR_NOT_IN_RANGE){
-            creep.moveTo(Game.spawns.Spawn1);
+    var spawnloc = creep.room.find(FIND_MY_SPAWNS)[0];
+    if (spawnloc.energy >= 50){
+        if (spawnloc.transferEnergy(creep) == ERR_NOT_IN_RANGE){
+            creep.moveTo(spawnloc);
     }}
 }else{
     if (!creep.memory.target || creep.memory.target == 0){ /* find next target */
@@ -52,6 +53,8 @@ if (creep.carry.energy == 0){
     
 
     }
+    
+
 }
 }
     
