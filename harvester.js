@@ -15,7 +15,7 @@
 	}
 	else {
 	    if (creep.memory.passbit == 1){
-	    var transferYeri = Game.spawns.Spawn1;
+	    var transferYeri = creep.room.find(FIND_MY_SPAWNS)[0];
 	    /* periodically check extensions - guess it's better than running find every iteration. */
 	    if (creep.memory.chkcount){
 	        creep.memory.chkcount = creep.memory.chkcount + 1;
@@ -33,11 +33,11 @@
 		if( process == ERR_NOT_IN_RANGE) {
 			creep.moveTo(transferYeri);
 		}
-		if( process == ERR_FULL && transferYeri == Game.spawns.Spawn1) {
+		if( process == ERR_FULL && transferYeri == creep.room.find(FIND_MY_SPAWNS)[0]) {
             creep.memory.passbit = 0;
             console.log("Harvester: Spawn is full.");
 		} 
-		if( process == ERR_FULL && transferYeri != Game.spawns.Spawn1) {
+		if( process == ERR_FULL && transferYeri != creep.room.find(FIND_MY_SPAWNS)[0]) {
             /* creep.memory.passbit = 1; */
             console.log("Harvester: Extension became full.");
 		}
