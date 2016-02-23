@@ -9,10 +9,11 @@
   module.exports = function (creep) {
 
 if (creep.carry.energy == 0 && creep.memory.waitbit != 1){ /* specialized as needed by carrier role */
-    if (Game.spawns.Spawn1.energy >= 50){
+    var spawnloc = creep.room.find(FIND_MY_SPAWNS)[0];
+    if (spawnloc.energy >= 50){
         creep.memory.upgrademode = 0;
-        if (Game.spawns.Spawn1.transferEnergy(creep) == ERR_NOT_IN_RANGE){
-            creep.moveTo(Game.spawns.Spawn1);
+        if (spawnloc.transferEnergy(creep) == ERR_NOT_IN_RANGE){
+            creep.moveTo(spawnloc);
     }}
 }else{
     var areas = creep.room.find(FIND_CONSTRUCTION_SITES);
@@ -24,18 +25,28 @@ if (creep.carry.energy == 0 && creep.memory.waitbit != 1){ /* specialized as nee
         }
     }else{
      /* upgrader mode. obsoleting upgrader creep. */
-    process = creep.upgradeController(creep.room.controller) 
-    if (process == ERR_NOT_IN_RANGE && creep.carry.energy != 0){
+    process = creep.upgradeController(creep.room.controller)
+    if (process == ERR_NOT_IN_RANGE){
         creep.moveTo(creep.room.controller);
+    }    
+    if (creep.memory.upgrademode == 1 && creep.memory.waitmode == 1 && creep.carry.energy < creep.carryCapacity/4){ // LINK
+        var linkpoints = creep.room.memory.linkpoints;
+        if (typeof linkpoints !== "undefined"){ var linkTo = creep.room.lookForAt('structure', linkpoints[0][2], linkpoints[0][3])[0]; }
+        if (typeof linkTo !== "undefined"){linkTo.transferEnergy(creep);}
     }
-    if (process == OK){
+    if (creep.pos.isNearTo(creep.room.controller)){
          creep.memory.upgrademode = 1; /* checked by carrier role */
+         if (creep.memory.waitmode == 1){
+            creep.memory.waitbit = 1; /* checked by carrier role */
+            
+        }
     }
     if (process == ERR_NOT_ENOUGH_RESOURCES){
+        if (creep.memory.waitmode != 1){
         creep.memory.upgrademode = 0; /* checked by carrier role */
         creep.memory.waitbit = 0; /* checked by carrier role */
-        if(creep.pos.isNearTo(creep.room.controller)) {
-        creep.move(RIGHT);
+        }else{
+            creep.moveTo(creep.room.controller);    
         }
     }
 
