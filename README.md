@@ -57,9 +57,10 @@ Settings can be changed by altering creep memory. Syntax: Memory.creeps.Creepnam
 - Upgrader: Obsolete role, replaced by Builders. It upgrades controllers and it's commented-out by default.
 
 
-Room settings:
-	- wallhits: Maximum hitpoint of Walls and Ramparts.
-	- linkpoints: An array of Link coordinates to determine connections between them, in this order: [[FROM X],[FROM Y],[TO X],[TO Y]]
+*Room settings:*
+
+- wallhits: Maximum hitpoint of Walls and Ramparts.
+- linkpoints: An array of Link coordinates to determine connections between them, in this order: [[FROM X],[FROM Y],[TO X],[TO Y]]
 
 # Installation
 
