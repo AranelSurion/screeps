@@ -14,7 +14,7 @@ if (hostile){
     if (creep.attack(hostile) == ERR_NOT_IN_RANGE){
         creep.moveTo(hostile);
     }
-    
+    creep.rangedAttack(hostile);
 }
 
 var structure = creep.pos.findClosestByRange(FIND_HOSTILE_STRUCTURES,{filter: function(object){return object.structureType != STRUCTURE_CONTROLLER && object.structureType != STRUCTURE_KEEPER_LAIR;}});
@@ -25,10 +25,19 @@ if (!hostile && structure){
     }    
 }
 
+var construction = creep.pos.findClosestByRange(FIND_HOSTILE_CONSTRUCTION_SITES,{filter: function(object){return object.structureType != STRUCTURE_CONTROLLER && object.structureType != STRUCTURE_KEEPER_LAIR;}});
+if (hostile == null && structure == null && construction){; //TODO IMPLEMENT STOMP
+    if (console.log(creep.attack(construction)) == ERR_NOT_IN_RANGE){
+        creep.moveTo(construction);
+    }    
+}
+
 if (Game.flags.GUARD_MOVE){
     creep.cancelOrder("move"); /* cancel ALL move orders */
+    //creep.cancelOrder("attack"); /* TO BE REMOVED. ADDED TO IGNORE STRUCTURES ON MARCH */
     creep.moveTo(Game.flags.GUARD_MOVE);
     if (hostile){
+        creep.rangedAttack(hostile);
         creep.attack(hostile);
     }
 }
