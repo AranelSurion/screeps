@@ -76,8 +76,8 @@ module.exports = function (creep) {
             
             // IF STORAGE DOES NOT EXIST
             if (!roomstorage){
-            if (creep.upgradeController(Game.spawns.Spawn1.room.controller) == ERR_NOT_IN_RANGE){
-                creep.moveTo(Game.spawns.Spawn1.room.controller);
+            if (creep.upgradeController(Game.spawns.Spawn2.room.controller) == ERR_NOT_IN_RANGE){
+                creep.moveTo(Game.spawns.Spawn2.room.controller);
             }            
             }
             break;
